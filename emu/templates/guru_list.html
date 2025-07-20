@@ -1,0 +1,159 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Terapeuták{% endblock %} 
+
+<!-- Element injected in the BODY element -->
+{% block body_class %} sidebar-mini pace-primary {% endblock body_class %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/static/assets/plugins/fontawesome-free/css/all.min.css">
+  <!-- adminlte-->
+  <link rel="stylesheet" href="/static/assets/css/adminlte.min.css">
+
+  <link rel="stylesheet" href="/static/assets/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="/static/assets/css/buttons.dataTables.min.css">
+    <style>
+              tfoot input {
+                  width: 100%;
+                  padding: 3px;
+                  box-sizing: border-box;
+                   }
+                   
+              .dataTables_wrapper .dataTables_paginate {
+                  background-color: PeachPuff;
+                  }
+</style>
+
+{% endblock stylesheets %}
+
+{% block content %}  
+
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Terapeuták</h1>
+          </div>
+          
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="card">
+        <div class="card-header">
+          <a class="btn bg-gradient-success" href="{% url 'guru' %}">Terapeuta felvétele</a>
+        </div>
+        <div class="card-body">
+
+          <table id="tabla" class="table table-striped table-bordered" >
+          
+              <thead class="thead-light">
+                    <tr>
+                      <th scope="col">Név</th>
+                      <th scope="col">Képzettség</th>
+                      <th scope="col">Helyszín</th>
+                      <th scope="col">Email</th>
+                                           
+                    </tr>
+                    
+              </thead>
+              <tbody>
+                  {% for guru in guruk %}
+                  <tr>
+                      <td><a href="{% url 'guru_mod' guru.id %}">{{guru.nev}}</a></td>
+                      <td>{{guru.kepzettseg}}</td>
+                      <td>{{guru.helyszin}}</td>
+                      <td>{{guru.email}}</td>
+                      
+                      
+                  </tr>
+                {% endfor %}
+              </tbody>
+          </table>
+
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+          
+        </div>
+        <!-- /.card-footer-->
+      </div>
+      <!-- /.card -->
+
+    </section>
+    <!-- /.content -->
+  </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+  <script src="/static/assets/plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap 4 -->
+  <script src="/static/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="/static/assets/js/adminlte.min.js"></script>
+  <!-- DataTable -->
+	
+	<script type="text/javascript" language="javascript" src="/static/assets/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" language="javascript" src="/static/assets/js/dataTables.buttons.min.js"></script>
+	<script type="text/javascript" language="javascript" src="/static/assets/js/jszip.min.js"></script>
+	<script type="text/javascript" language="javascript" src="/static/assets/js/pdfmake.min.js"></script>
+	<script type="text/javascript" language="javascript" src="/static/assets/js/vfs_fonts.js"></script>
+	<script type="text/javascript" language="javascript" src="/static/assets/js/buttons.html5.min.js"></script>
+	<script type="text/javascript" language="javascript" src="/static/assets/js/js/buttons.print.min.js"></script>
+
+<script>
+  $(document).ready(function() {
+    // Setup - add a text input to each footer cell
+    $('#tabla thead tr').clone(true).appendTo( '#tabla thead' );
+    $('#tabla thead tr:eq(1) th').each(function (i) {
+                if (!$(this).hasClass("noFilter")) {
+                    var title = $(this).text();
+                    $(this).html('<input type="text" placeholder="Keres:' + title + '" />');
+
+                    $('input', this).on('keyup change', function () {
+                        if (table.column(i).search() !== this.value) {
+                            table
+                                .column(i)
+                                .search(this.value)
+                                .draw();
+                        }
+                    });
+                }
+                else {
+                    $(this).html('<span></span>');
+                }
+
+            });
+
+    var table = $('#tabla').DataTable( {
+        orderCellsTop: true,
+        fixedHeader: true,
+        "dom":
+           "<'row'<'col-sm-12'B>>" +
+          "<'row'<'col-sm-12 col-md-6'lf><'col-sm-12 col-md-6'p>>" +
+          "<'row'<'col-sm-12'tr>>" +
+          "<'row'<'col-sm-12 col-md-6'i><'col-sm-6 col-md-3'>>",
+        "language": {
+          "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Hungarian.json"
+              },
+        "buttons": ['copy', 'excel', 'pdf', 'print'],
+        "lengthMenu": [[15, 30, 50, -1], [15, 30, 50, "Mind"]]
+    } );
+} );
+  </script>
+
+{% endblock javascripts %}

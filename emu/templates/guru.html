@@ -1,0 +1,174 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} {{ Form_neve }} {% endblock %} 
+
+<!-- Element injected in the BODY element -->
+{% block body_class %} sidebar-mini pace-primary {% endblock body_class %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/static/assets/plugins/fontawesome-free/css/all.min.css">
+  <!-- pace-progress -->
+  <link rel="stylesheet" href="/static/assets/plugins/pace-progress/themes/black/pace-theme-flat-top.css">
+  <!-- adminlte-->
+  <link rel="stylesheet" href="/static/assets/css/adminlte.min.css">
+
+  <link rel="stylesheet" href="/static/assets/css/jquery.datetimepicker.min.css" >
+
+    <style>
+	.profile-pic{
+		max-width: 200px;
+		max-height:200px;
+		margin: 0 auto;
+		border-radius: 50%;
+	}
+    </style>
+  
+
+{% endblock stylesheets %}
+
+{% block content %}
+
+
+
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-header">
+                        
+                        </div>
+                        <div class="card-body">
+                            <hr>
+                            <h3 style="text-align: center">{{guru.nev}}</h3>
+                            <hr>
+                            
+                              <h4 style="text-align: center">Terápiái</h4>
+                              {% for terapia in terapiak %}
+                                <a class="btn bg-gradient-info btn-block" href="{% url 'terapia_mod' terapia.csoport.id %}">{{terapia.csoport.nev}}</a>
+                              {% endfor %}
+                            <!--
+                            {% if guru.fenykep %}
+                            <img class="profile-pic" src="{{guru.fenykep.url}}" >    
+                            {% endif %} 
+                            -->    
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer">
+                        
+                        </div>
+                    <!-- /.card-footer-->
+                    </div>
+                    
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                        
+                        </div>
+                        <div class="card-body">
+                            <form action="" method="POST" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                {{ form.media }}
+                                {{ form.as_p }}
+                                <hr style="width:50%;text-align:left;margin-left:0">
+                                A *-al jelölt mezők kitöltése kötelező!       
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer">
+                             <button class="btn btn-danger" type="submit">Mentés</button>
+                            </form>
+                        </div>
+                    <!-- /.card-footer-->
+                    </div>
+                </div>
+            </div>
+            
+    <!-- /.content -->
+  </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+  <!-- jQuery -->
+  <script src="/static/assets/plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap 4 -->
+  <script src="/static/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- pace-progress -->
+  <script src="/static/assets/plugins/pace-progress/pace.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="/static/assets/js/adminlte.min.js"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="/static/assets/js/demo.js"></script>
+
+  <script src="/static/assets/plugins/jquery/jquery.datetimepicker.full.min.js"></script>
+
+    <script>
+    $(function () {
+      $.datetimepicker.setLocale('hu');
+      $("#id_kezdes").datetimepicker({
+        format: 'Y-m-d H:i',
+        
+      });
+      $("#id_befejezes").datetimepicker({
+        format: 'Y-m-d H:i',
+        
+      });
+    });
+  </script>
+
+{% endblock javascripts %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+<div class="row">
+	<div class="col-md-3">
+		<div class="card card-body">
+			<a class="btn btn-warning" href="{% url 'home' %}"> &#8592; Back to Profile</a>
+			<hr>
+			<h3 style="text-align: center">Account Settings</h3>
+			<hr>
+			<img class="profile-pic" src="{{request.user.customer.profile_pic.url}}" >
+		
+		</div>
+	</div>
+	<div class="col-md-9">
+		<div class="card card-body">
+			
+			<form method="POST" action="" enctype="multipart/form-data">
+				{% csrf_token %}
+				{{form.as_p}}
+		
+			<input class="btn btn-primary" type="submit" name="Update Information">
+			</form>

@@ -1,0 +1,191 @@
+{% extends "layouts/base.html" %}
+{% load widget_tweaks %}
+
+{% block title %} Jelenléti ív {% endblock %} 
+
+<!-- Element injected in the BODY element -->
+{% block body_class %} sidebar-mini pace-primary {% endblock body_class %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/static/assets/plugins/fontawesome-free/css/all.min.css">
+  <!-- pace-progress -->
+  <link rel="stylesheet" href="/static/assets/plugins/pace-progress/themes/black/pace-theme-flat-top.css">
+  <!-- adminlte-->
+  <link rel="stylesheet" href="/static/assets/css/adminlte.css">
+  <style>
+      .btn span.fas {    			
+      opacity: 0;				
+      }
+    .btn.active span.fas {				
+      opacity: 1;				
+      }
+  </style>
+{% endblock stylesheets %}
+
+{% block content %}  
+
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col">
+            
+          </div>
+          
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- Default box -->
+        <div class="row justify-content-md-center">
+          <div class="col">
+            <div class="card">
+          
+              <div class="card-header">
+                <h2 class="card-title">Jelenléti Ív
+                <hr>
+                <b>{{ora.kezdes}}</b>-kor kezdődő <br>
+                <b>{{csoport.nev}}</b> terápia <br>
+                {% for guru in guruk %}
+                    <b>{{guru.guru.nev}}, </b>
+                {% endfor %} terapeuta(ák) vezetésével <br>
+                
+                
+                </h2>
+              </div>
+              <div class="card-body">
+              A színek jelentése:
+                <table>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <label class="btn btn-sm btn-default">
+				                Jelöletlen     
+			                  </label>
+                      </td>
+                      <td>
+                        <label class="btn btn-sm btn-success">
+				                Jelen volt     
+			                  </label>
+                      </td>
+                      <td>
+                        <label class="btn btn-sm btn-warning">
+				                0%   
+			                  </label>
+                      </td>
+                      <td>
+                        <label class="btn btn-sm btn-danger">
+				                100% 
+			                  </label>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>  
+                <h6>A Terápia tagjai</h6>
+                
+                                
+                <hr>
+                <form action="" method="POST">
+                
+                {{ formset.management_form }}
+                {% csrf_token %}
+                <table>
+                  <tbody>
+                    {% for form in formset %}
+
+                      {{ form.id }}
+                        <tr>
+                      
+                        <td>
+                            {% if form.gyerek.value %}
+                                {% with ertek=form.gyerek.nev.value %}
+                                {{ertek}}
+                                {% endwith %}
+                              <div>{{form.gyerek}}</div>
+
+                            {% else %}
+                              <div>{{form.gyerek}}</div>
+                            {% endif %}
+                        </td>
+                        <td>  
+                          
+                          <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                            <label class="btn btn-sm btn-default active">
+				                      {{ form.status.0.tag }}
+				                      <span class="fas fa-check"></span>
+			                      </label>
+
+                            <label class="btn btn-sm btn-success">
+				                      {{ form.status.1.tag }}
+				                      <span class="fas fa-check"></span>
+			                      </label>
+
+                            <label class="btn btn-sm btn-warning">
+				                      {{ form.status.2.tag }}
+				                      <span class="fas fa-check"></span>
+			                      </label>
+
+                            <label class="btn btn-sm btn-danger">
+				                      {{ form.status.3.tag }}
+				                      <span class="fas fa-check"></span>
+			                      </label>
+                            </div>
+                        </td>
+
+                        
+                      </tr>
+
+                  {% endfor %}
+                  </tbody>
+                </table>
+                {% if msg %}
+                  {{ msg }}
+                {% endif %}
+                    
+              </div>
+              
+              <!-- /.card-body -->
+              <div class="card-footer">
+                <button class="btn btn-danger" type="submit" value="Submit">Mentés</button>
+                
+                </form>
+              <a class="btn bg-gradient-warning btn-sm" href="{% url 'jelenleti_regen' ora.id %}">Újragenerálás</a></td>
+              
+              </div>
+              
+            <!-- /.card-footer-->
+            </div>
+          </div>
+        </div>
+        
+      <!-- /.card -->
+
+    </section>
+    <!-- /.content -->
+  </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+  <!-- jQuery -->
+  <script src="/static/assets/plugins/jquery/jquery.min.js"></script>
+  <script src="/static/assets/plugins/jquery/jquery.formset.js"></script>
+  <!-- Bootstrap 4 -->
+  <script src="/static/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- pace-progress -->
+  <script src="/static/assets/js/adminlte.min.js"></script>
+ 
+  
+
+{% endblock javascripts %}

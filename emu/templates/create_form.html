@@ -1,0 +1,107 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} {{ Form_neve }} {% endblock %} 
+
+<!-- Element injected in the BODY element -->
+{% block body_class %} sidebar-mini pace-primary {% endblock body_class %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/static/assets/plugins/fontawesome-free/css/all.min.css">
+  <!-- adminlte-->
+  <link rel="stylesheet" href="/static/assets/css/adminlte.min.css">
+
+  <link rel="stylesheet" href="/static/assets/css/jquery.datetimepicker.min.css" >
+  
+
+{% endblock stylesheets %}
+
+{% block content %}  
+
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>{{ Form_neve }}</h1>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="card">
+       
+        <div class="card-body">
+          
+          <form action="" method="POST">
+            {% csrf_token %}
+            {{ form.media }}
+            {{ form.as_p }}
+            
+            <hr style="width:50%;text-align:left;margin-left:0">
+            A *-al jelölt mezők kitöltése kötelező!
+        </div>
+
+        <!-- /.card-body -->
+        <div class="card-footer">
+          <button class="btn btn-danger" type="submit">Mentés</button>
+          </form>
+        </div>
+        <!-- /.card-footer-->
+      </div>
+      <!-- /.card -->
+
+    </section>
+    <!-- /.content -->
+  </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+  <!-- jQuery -->
+  <script src="/static/assets/plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap 4 -->
+  <script src="/static/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="/static/assets/js/adminlte.min.js"></script>
+
+
+  <script src="/static/assets/plugins/jquery/jquery.datetimepicker.full.min.js"></script>
+
+    <script>
+    $(function () {
+      $.datetimepicker.setLocale('hu');
+      $("#id_kezdes").datetimepicker({
+        format: 'Y-m-d H:i',
+        
+      });
+      $("#id_befejezes").datetimepicker({
+        format: 'Y-m-d H:i',
+        
+      });
+      
+      $("#id_idopont").datetimepicker({
+        format: 'Y-m-d H:i',
+        
+      });
+
+
+    });
+  </script>
+
+{% endblock javascripts %}
+
+
+
+

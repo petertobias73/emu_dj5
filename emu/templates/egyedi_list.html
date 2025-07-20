@@ -1,0 +1,128 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Egyedi alkalmak{% endblock %} 
+
+<!-- Element injected in the BODY element -->
+{% block body_class %} sidebar-mini pace-primary {% endblock body_class %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/static/assets/plugins/fontawesome-free/css/all.min.css">
+  <!-- adminlte-->
+  <link rel="stylesheet" href="/static/assets/css/adminlte.min.css">
+
+{% endblock stylesheets %}
+
+{% block content %}  
+
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Egyedi alkalmak</h1>
+          </div>
+          
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="card">
+        <div class="card-header">
+          <a class="btn bg-gradient-success" href="{% url 'egyedi' %}">Egyedi alkalom felvétele</a>
+        </div>
+        <div class="card-body">
+        <!--
+            Szűro modul
+        
+          <div class="row">
+	          <div class="col">
+			        <form method="get">
+          				{{myFilter.form}}
+                  <button class="btn btn-primary" type="submit">Search</button>
+		          </form>
+      		  </div>
+	        </div>
+          -->
+          <table class="table table-striped">
+          <tr>
+              <thead class="thead-light">
+                    <tr>
+                      <th scope="col">Időpont</th>
+                      <th scope="col">Típus</th>
+                      <th scope="col">Megtartott</th>
+                      <th scope="col">Létszám</th>
+                      
+                      <th scope="col">Ár</th>
+                      <th scope="col">Adatlap</th>
+                      <th scope="col">Törlés</th>                       
+                    </tr>
+                    <tr>
+                    <form method="get">
+                        {% for field in myFilter.form %}
+                            <th> {{field}}</th>
+                        {% endfor %}
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th> <button class="btn-sm btn-primary" type="submit">Keresés</button></th>
+                    </form>
+                  </tr>
+              </thead>
+              <tbody>
+                  {% for egyedi in egyediek %}
+                  <tr>
+                      <td>{{egyedi.idopont}}</td>
+                      <td>{{egyedi.tipus}}</td>
+                      {% if egyedi.megtartva %}
+                          <td><strong>Megtartott</stromg></td>
+                      {% else %}
+                          <td><strong>Tervezett</strong></td>
+                      {% endif %}   
+                      <td>{{egyedi.letszam}}</td>                                 
+                      <td>{{egyedi.ar}}</td>
+                      <td><a class="btn bg-gradient-warning btn-sm" href="{% url 'egyedi_mod' egyedi.id %}">Adatlap</a></td>
+                      <td><a class="btn bg-gradient-danger btn-sm" href="{% url 'egyedi_torles' egyedi.id %}">Törlés</a></td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+          </table>
+          {% if is_paginated %}
+              {% include "_pagination.html" %}
+          {% endif %}
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+          
+        </div>
+        <!-- /.card-footer-->
+      </div>
+      <!-- /.card -->
+
+    </section>
+    <!-- /.content -->
+  </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+  <!-- jQuery -->
+  <script src="/static/assets/plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap 4 -->
+  <script src="/static/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="/static/assets/js/adminlte.min.js"></script>
+
+
+{% endblock javascripts %}

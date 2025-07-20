@@ -1,0 +1,191 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Szülők {% endblock %} 
+
+<!-- Element injected in the BODY element -->
+{% block body_class %} sidebar-mini pace-primary {% endblock body_class %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/static/assets/plugins/fontawesome-free/css/all.min.css">
+  <!-- adminlte-->
+  <link rel="stylesheet" href="/static/assets/css/adminlte.min.css">
+
+  <link rel="stylesheet" href="/static/assets/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="/static/assets/css/buttons.dataTables.min.css">
+    <style>
+              tfoot input {
+                  width: 100%;
+                  padding: 3px;
+                  box-sizing: border-box;
+                   }
+                   
+              .dataTables_wrapper .dataTables_paginate {
+                  background-color: PeachPuff;
+                  }
+</style>
+
+  
+
+{% endblock stylesheets %}
+
+{% block content %}  
+
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Szülők</h1>
+          </div>
+          
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="card">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-4">
+              <a class="btn bg-gradient-success" href="{% url 'szulo' %}">Szülő felvétele</a>
+              
+            </div>
+            <div class="col-6">
+            </div>
+            <div class="col-2">
+            </div>
+         </div>
+         </div>
+        <div class="card-body">
+        <!--button class="dt-button buttons-copy buttons-html5" tabindex="0" aria-controls="tabla" type="button"><span>Copy</span></button> <button class="dt-button buttons-csv buttons-html5" tabindex="0" aria-controls="tabla" type="button"><span>CSV</span></button> <button class="dt-button buttons-excel buttons-html5" tabindex="0" aria-controls="tabla" type="button"><span>Excel</span></button> <button class="dt-button buttons-pdf buttons-html5" tabindex="0" aria-controls="tabla" type="button"><span>PDF</span></button> <button class="dt-button buttons-print" tabindex="0" aria-controls="tabla" type="button"><span>Print</span></button--> 
+          <table id="tabla" class="table table-striped table-bordered" >
+          
+              <thead class="thead-light">
+                  <tr>
+                      <th scope="col">Név</th>
+                      <th scope="col">Telefon</th>
+                      <th scope="col">E-mail cím</th>
+                      <th scope="col">Levelezési cím </th>
+                      <th scope="col">Szerződő</th>
+                      <th scope="col">Aktív</th>
+                      
+                      
+                  </tr>
+                  
+              </thead>
+              <tbody>
+                  {% for szulo in szulok %}
+                    {% if szulo.aktiv %}
+                    <tr>
+                        <td><a href="{% url 'szulo_mod' szulo.id %}">{{szulo.nev}}</a></td>
+                        <td>{{szulo.telefon}}</td>
+                        <td>{{szulo.email}}</td>
+                        <td>{{szulo.lev_cim}}</td>
+                        <td>{% if szulo.szerzodo %}igen{% else %}nem{% endif %}</td>
+                        <td>Aktív</td> 
+                    </tr>
+                    {% else %}
+
+                    <tr>
+                        <td bgcolor=#e6cfca><a href="{% url 'szulo_mod' szulo.id %}">{{szulo.nev}}</a></td>
+                        <td bgcolor=#e6cfca>{{szulo.telefon}}</td>
+                        <td bgcolor=#e6cfca>{{szulo.email}}</td>
+                        <td bgcolor=#e6cfca>{{szulo.lev_cim}}</td>
+                        <td bgcolor=#e6cfca>{% if szulo.szerzodo %}igen{% else %}nem{% endif %}</td>
+                        <td bgcolor=#e6cfca>Lezárt</td> 
+                    </tr>
+                    {% endif %}
+                  {% endfor %}
+              </tbody>
+
+          </table>
+
+
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+        
+        </div>
+        <!-- /.card-footer-->
+      </div>
+      <!-- /.card -->
+
+    </section>
+    <!-- /.content -->
+  </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+  <!-- jQuery -->
+  
+  <script src="/static/assets/plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap 4 -->
+  <script src="/static/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="/static/assets/js/adminlte.min.js"></script>
+  <!-- DataTable -->
+	
+	<script type="text/javascript" language="javascript" src="/static/assets/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" language="javascript" src="/static/assets/js/dataTables.buttons.min.js"></script>
+	<script type="text/javascript" language="javascript" src="/static/assets/js/jszip.min.js"></script>
+	<script type="text/javascript" language="javascript" src="/static/assets/js/pdfmake.min.js"></script>
+	<script type="text/javascript" language="javascript" src="/static/assets/js/vfs_fonts.js"></script>
+	<script type="text/javascript" language="javascript" src="/static/assets/js/buttons.html5.min.js"></script>
+	<script type="text/javascript" language="javascript" src="/static/assets/js/js/buttons.print.min.js"></script>
+  
+	
+
+
+<script>
+  $(document).ready(function() {
+    // Setup - add a text input to each footer cell
+    $('#tabla thead tr').clone(true).appendTo( '#tabla thead' );
+    $('#tabla thead tr:eq(1) th').each(function (i) {
+                if (!$(this).hasClass("noFilter")) {
+                    var title = $(this).text();
+                    $(this).html('<input type="text" placeholder="Keres:' + title + '" />');
+
+                    $('input', this).on('keyup change', function () {
+                        if (table.column(i).search() !== this.value) {
+                            table
+                                .column(i)
+                                .search(this.value)
+                                .draw();
+                        }
+                    });
+                }
+                else {
+                    $(this).html('<span></span>');
+                }
+
+            });
+
+    var table = $('#tabla').DataTable( {
+        orderCellsTop: true,
+        fixedHeader: true,
+        "dom":
+           "<'row'<'col-sm-12'B>>" +
+          "<'row'<'col-sm-12 col-md-6'lf><'col-sm-12 col-md-6'p>>" +
+          "<'row'<'col-sm-12'tr>>" +
+          "<'row'<'col-sm-12 col-md-6'i><'col-sm-6 col-md-3'>>",
+        "language": {
+          "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Hungarian.json"
+              },
+        "buttons": ['copy', 'excel', 'pdf', 'print'],
+        "lengthMenu": [[15, 30, 50, -1], [15, 30, 50, "Mind"]]
+    } );
+} );
+  </script>
+{% endblock javascripts %}

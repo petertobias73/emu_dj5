@@ -1,0 +1,118 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Gyerekek Listája {% endblock %} 
+
+<!-- Element injected in the BODY element -->
+{% block body_class %} sidebar-mini pace-primary {% endblock body_class %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/static/assets/plugins/fontawesome-free/css/all.min.css">
+  <!-- pace-progress -->
+  <link rel="stylesheet" href="/static/assets/plugins/pace-progress/themes/black/pace-theme-flat-top.css">
+  <!-- adminlte-->
+  <link rel="stylesheet" href="/static/assets/css/adminlte.min.css">
+
+{% endblock stylesheets %}
+
+{% block content %}  
+
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Gyerekek listája</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Start</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="card">
+        <div class="card-header">
+        </div>
+        <div class="card-body">
+          <table class="table table-striped">
+            <tr>
+              <thead class="thead-light">
+                  <tr>
+                      <th scope="col">Kód</th>
+                      <th scope="col">Születési idő</th>
+                      <th scope="col">Anyja neve </th>
+                      <th scope="col">Aktív</th>
+                      <th scope="col">Adatlap</th>
+                  </tr>
+                  <tr>
+                    <form method="get">
+                        {% for field in myFilter.form %}
+                            <th> {{field}}</th>
+                        {% endfor %}
+                        <th> <button class="btn-sm btn-primary" type="submit">Keresés</button></th>
+                    </form>
+                  </tr>
+              </thead>
+              <tbody>
+                  {% for gyerek in gyerekek %}
+                  <tr>
+                      <td>{{gyerek.kod}}</td>
+                      <td>{{gyerek.szul_ido}}</td>
+                      <td>{{gyerek.anyja_neve}}</td>
+                      {% if gyerek.aktiv %}
+                          <td><strong>Aktív</stromg></td>
+                      {% else %}
+                          <td><strong>Nem aktív</strong></td>
+                      {% endif %}
+                      <td><a class="btn btn-warning btn-sm" href="{% url 'gyerek_mod' gyerek.id %}">Adatlap</a></td>
+                      
+                  </tr>
+                  {% endfor %}
+              </tbody>
+          </table>
+          {% if is_paginated %}
+              {% include "_pagination.html" %}
+          {% endif %}
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+          Footer
+        </div>
+        <!-- /.card-footer-->
+      </div>
+      <!-- /.card -->
+
+    </section>
+    <!-- /.content -->
+  </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+  <!-- jQuery -->
+  <script src="/static/assets/plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap 4 -->
+  <script src="/static/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- pace-progress -->
+  <script src="/static/assets/plugins/pace-progress/pace.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="/static/assets/js/adminlte.min.js"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="/static/assets/js/demo.js"></script>
+
+{% endblock javascripts %}

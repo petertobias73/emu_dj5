@@ -1,0 +1,169 @@
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="/" class="brand-link">
+      <img src="/static/assets/img/logo.jpg" alt="Egy masik ut logo" style="opacity: .8">
+      
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user panel (optional) -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        
+        <div class="info">
+          <a class="d-block">
+            {{ request.user.username }} - belépve
+            <br>
+            Frissítve : 2021.10.14.
+          </a>
+        </div>
+      </div>
+      
+
+      <!-- SidebarSearch Form -->
+      <div class="form-inline">
+        <div class="input-group" data-widget="sidebar-search" disabled="">
+          <div class="form-control form-control-sidebar" disabled="">
+          </div>
+          
+        </div>
+      </div>
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+          {% if request.user.groups.all.0.name == 'vezeto' %}
+
+            <li class="nav-item has-treeview">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-users-cog"></i>
+                <p>
+                  Adminisztráció
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="{% url 'uj_felhasznalo' %}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Felhasználó felvétel</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{% url 'felhasznalok' %}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Felhasználó lista</p>
+                  </a>
+                </li>
+        
+              </ul>
+            </li>
+            <li class="nav-item has-treeview">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-users-cog"></i>
+                <p>
+                  Elszámolás
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="{% url 'osszesito' %}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Havi Összesités Letöltése</p>
+                  </a>
+                </li>
+                
+        
+              </ul>
+            </li>
+            <li class="nav-item">
+            <a href="{% url 'szulo_lista' %}" class="nav-link">
+              <i class="nav-icon fas fa-user-friends"></i>
+              <p>Szülők</p>
+            </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'gyerek_lista' %}" class="nav-link">
+                <i class="nav-icon fas fa-child"></i>
+                <p>Gyerekek</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'helyszin_lista' %}" class="nav-link">
+                <i class="nav-icon fas fa-map-marker-alt"></i>
+                <p>Helyszínek</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'guru_lista' %}" class="nav-link">
+                <i class="nav-icon fas fa-jedi"></i>
+                <p>Terapeuták</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'foglalkozas_tipus_lista' %}" class="nav-link">
+                <i class="fas fa-clipboard-list nav-icon"></i>
+                <p>Terápia típusok</p>
+              </a>
+            {% endif %}
+            {% if request.user.groups.all.0.name == 'vezeto' or request.user.groups.all.0.name == 'terapeuta'%}
+            <li class="nav-item">
+              <a href="{% url 'terapia_lista' %}" class="nav-link">
+                  <i class="nav-icon fas fa-users"></i>
+                <p>Terápiák</p>
+              </a>
+            </li>
+            {% endif %}
+            {% if request.user.groups.all.0.name == 'vezeto' %}
+            <li class="nav-item">
+              <a href="{% url 'befizetes_lista' %}" class="nav-link">
+                <i class="fas fa-money-bill nav-icon"></i>
+                <p>Befizetesek</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'egyedi_lista' %}" class="nav-link">
+                <i class="fas fa-user-clock nav-icon"></i>
+                <p>Egyedi alkalmak</p>
+              </a>
+            </li>
+           {% endif %}
+          
+
+            <li class="nav-item" >
+                <a href="{% url 'ora_lista' %}" class="nav-link">
+                  <i class="nav-icon fas fa-clock"></i>
+                  <p>Órák</p>
+                </a>
+            </li>
+
+          <li class="nav-item">
+            <a href="{% url 'naptar' %}" class="nav-link">
+              <i class="nav-icon far fa-calendar-alt"></i>
+              <p>
+                Naptár
+                <!-- a lenti sorba a havi órák számát összesítve-->
+                
+              </p>
+            </a>
+          </li>
+
+          
+          <li class="nav-header"> 
+          <a class="btn bg-gradient-danger" href="{% url 'jelszocsere' %}">Jelszóváltás</a>
+          </li>
+          <li class="nav-header">
+          <a class="btn bg-gradient-info" href="{% url 'logout' %}">Kilépés</a>
+          </li>
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    
+    </div>
+    <!-- /.sidebar -->
+  </aside>
+  

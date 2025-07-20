@@ -1,0 +1,115 @@
+{% extends "layouts/base-fullscreen.html" %}
+
+{% block title %} Register {% endblock %} 
+
+<!-- Element injected in the BODY element -->
+{% block body_class %} register-page {% endblock body_class %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/static/assets/plugins/fontawesome-free/css/all.min.css">
+  <!-- icheck bootstrap -->
+  <link rel="stylesheet" href="/static/assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="/static/assets/css/adminlte.min.css">
+
+{% endblock stylesheets %}
+
+{% block content %}
+
+  <div class="register-box">
+
+    <div class="login-logo">
+        <a target="_blank" rel="noopener noreferrer" 
+           href="https://appseed.us/admin-dashboards/django-dashboard-adminlte">Egy <b>Másik </b>Út</a>
+    </div>    
+
+    <div class="card">
+      <div class="card-body register-card-body">
+        <p class="login-box-msg">
+            {% if msg %}
+                <span class="text-danger">{{ msg | safe }}</span>
+            {% else %}
+            <span>
+                Ön a <b>{{user}}</b> felhasználó
+                jelszavát
+                szeretné megváltoztatni.
+                Adja meg a jelszavakat!
+            </span>
+            {% endif %}            
+        </p>
+
+        <form role="form" method="post" action="">
+
+          {% csrf_token %}
+          <blockquote>
+                <p>A jelszó nem lehet hasonló a személyes adatok egyikéhez sem.</p>
+                <p>A jelszavának legalább 8 karakter hosszúnak kell lennie.</p>
+                <p>A jelszó nem lehet a túl gyakran használt jelszavak közül.</p>
+                <p>A jelszó nem állhat csak számjegyekből.</p>
+        </blockquote>
+            <hr>
+          
+          
+          
+          <div class="input-group mb-3">
+            {{ form.new_password1 }}
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-lock"></span>
+              </div>
+            </div>
+          </div>
+          <span class="text-error">{{ form.new_password1.errors }}</span>
+
+          <div class="input-group mb-3">
+            {{ form.new_password2 }}
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-lock"></span>
+              </div>
+            </div>
+          </div>
+          <span class="text-error">{{ form.new_password2.errors }}</span>
+
+                    
+          <div class="row">
+            
+              <button type="submit" name="register" class="btn btn-primary btn-block">Rögzítés</button>
+            
+            <!-- /.col -->
+          </div>
+        </form>
+
+        <br />
+        <div class="text-center">
+            
+            <br />
+            <br />
+            &copy; Egy 
+            <a target="_blank" rel="noopener noreferrer"
+               href="https://appseed.us/admin-dashboards/django-dashboard-adminlte"><b>Másik </b>Út</a> 
+            - coded by <a target="_blank" rel="noopener noreferrer" href="http://tobiaspeter.hu">Tóbiás Péter</a>.
+        </div>
+
+      </div>
+      <!-- /.form-box -->
+    </div><!-- /.card -->
+  </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+  <!-- jQuery -->
+  <script src="/static/assets/plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap 4 -->
+  <script src="/static/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+{% endblock javascripts %}
+

@@ -1,0 +1,182 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Terápia űrlap {% endblock %} 
+
+<!-- Element injected in the BODY element -->
+{% block body_class %} sidebar-mini pace-primary {% endblock body_class %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/static/assets/plugins/fontawesome-free/css/all.min.css">
+  
+  <!-- adminlte-->
+  <link rel="stylesheet" href="/static/assets/css/adminlte.min.css">
+
+{% endblock stylesheets %}
+
+{% block content %}  
+
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+     
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- Default box -->
+      <!-- Csoport űrlap card-->
+    <div class="card">
+        <div class="card-header">
+            <h1 class="card-title">Terápia létrehozása</h1>
+        </div>
+        <form class="form-horizontal" action="." method="post">
+        <div class="card-body">
+    
+            {% csrf_token %}
+            <div>
+                {{ form.as_p }}
+            </div>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+        <fieldset>
+                <legend>Terpaeuták</legend>
+                
+                {{ guru_formset.management_form }}
+                {{ guru_formset.non_form_errors }}
+                
+                        {% for form in guru_formset %}
+                        {{ form.id }}
+                    <div class="inline {{ guru_formset.prefix }}">
+                        {{ form.guru.errors }}
+                        {{ form.guru.label_tag }}
+                        {{ form.guru }}
+                    </div>
+                {% endfor %}
+            </fieldset>
+            <hr style="width:50%;text-align:left;margin-left:0">
+            <fieldset>
+
+                <legend>Gyerekek</legend>
+                
+                {{ gyerek_formset.management_form }}
+                {{ gyerek_formset.non_form_errors }}
+                {% for form in gyerek_formset %}
+                    {{ form.id }}
+                    <div class="inline {{ gyerek_formset.prefix }}">
+                        {{ form.gyerek.errors }}
+                        {{ form.gyerek.label_tag }}
+                        {{ form.gyerek }}
+                    </div>
+                {% endfor %}
+            </fieldset>
+            <hr style="width:50%;text-align:left;margin-left:0">
+                                A *-al jelölt mezők kitöltése kötelező!
+                                Egy Terápia során egy Terapeutának és legalább egy gyereknek szerepelnie kell!
+            <hr style="width:50%;text-align:left;margin-left:0">
+            <button class="btn bg-gradient-danger" type="submit"/>Mentés</button>
+             </form>
+        </div>
+       
+        <!-- /.card-footer-->
+    </div>
+        <!-- /. Csoport űrlap card-->
+        <!-- /. Csoport órái card-->
+    {% if orak %}
+    <div class="card">
+        <div class="card-header">
+          <h3> A Terápia órái </h3>
+        </div>
+        <div class="card-body">
+        <!--
+            Szűro modul
+        
+          <div class="row">
+	          <div class="col">
+			        <form method="get">
+          				{{myFilter.form}}
+                  <button class="btn btn-primary" type="submit">Search</button>
+		          </form>
+      		  </div>
+	        </div>
+          -->
+          <table class="table table-striped">
+          <tr>
+              <thead class="thead-light">
+                    <tr>
+                      <th scope="col">Kezdés</th>
+                      <th scope="col">Befejezés</th>
+                      <th scope="col">Megtartott</th>
+                      <th scope="col">Adatlap</th>                      
+                    </tr>
+                    <tr>
+                    <form method="get">
+                        {% for field in myFilter.form %}
+                            <th> {{field}}</th>
+                        {% endfor %}
+                        <th> <button class="btn-sm btn-primary" type="submit">Keresés</button></th>
+                    </form>
+                  </tr>
+              </thead>
+              <tbody>
+                  {% for ora in orak %}
+                  <tr>
+                      <td>{{ora.kezdes}}</td>
+                      <td>{{ora.befejezes}}</td>
+                      <td>{{ora.megtartott}}</td>
+                      <td><a class="btn btn-warning btn-sm" href="{% url 'ora_mod' ora.id %}">Adatlap</a></td>
+                      
+                  </tr>
+                {% endfor %}
+              </tbody>
+          </table>
+          {% if is_paginated %}
+              {% include "_pagination.html" %}
+          {% endif %}
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+          Footer
+        </div>
+        <!-- /.card-footer-->
+        {% endif %}
+    </section>
+    <!-- /.content -->
+  </div>
+
+{% endblock content %}
+
+{% block javascripts %}
+
+<!-- jQuery -->
+    <script src="/static/assets/plugins/jquery/jquery.min.js"></script>
+    <script src="/static/assets/plugins/jquery/jquery.formset.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="/static/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- AdminLTE App -->
+    <script src="/static/assets/js/adminlte.min.js"></script>
+
+
+    <script type="text/javascript">
+        $(function() {
+            $(".inline.{{ guru_formset.prefix }}").formset({
+                prefix: "{{ guru_formset.prefix }}",
+            })
+            $(".inline.{{ gyerek_formset.prefix }}").formset({
+                prefix: "{{ gyerek_formset.prefix }}",
+            })
+        })
+    </script>
+
+{% endblock javascripts %}
+<!-- Specific Page JS goes HERE  -->
+

@@ -1,0 +1,42 @@
+  <!-- Navbar -->
+  <nav class="main-header navbar navbar-expand navbar-dark navbar-lightblue">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="{% url 'home' %}" class="nav-link">Kezdő oldal</a>
+      </li>
+      {% if request.user.groups.all.0.name == 'vezeto' %}
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="{% url 'attekinto' %}" class="nav-link">Vezetői áttekintő</a>
+      </li>
+      {% endif %} 
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="https://egymasikut.hu/" class="nav-link">Külső oldal</a>
+      </li>
+      {% if request.user.groups.all.0.name == 'vezeto' %}
+      <li class="nav-item dropdown">
+        <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Napiüzi</a>
+        <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="left: 0px; right: inherit;">
+              <li><a href="{% url 'napiuzi' %}" class="dropdown-item">Napiüzi feladás </a></li>
+              <li><a href="{% url 'napiuzi_lista' %}" class="dropdown-item">Napi üzi lista</a></li>
+        </ul>
+      </li>  
+
+      {% endif %}      
+    </ul>
+    
+
+
+    <!-- SEARCH FORM -->
+  
+
+    <!-- Right navbar links -->
+    
+  </nav>
+
+
+
+  <!-- /.navbar -->

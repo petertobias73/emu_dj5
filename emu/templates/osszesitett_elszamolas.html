@@ -1,0 +1,94 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Összesített elszámolás {% endblock %} 
+
+<!-- Element injected in the BODY element -->
+{% block body_class %} sidebar-mini pace-primary {% endblock body_class %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/static/assets/plugins/fontawesome-free/css/all.min.css">
+
+  <!-- adminlte-->
+  <link rel="stylesheet" href="/static/assets/css/adminlte.min.css">
+
+{% endblock stylesheets %}
+
+{% block content %}  
+
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Összesített elszámolás</h1>
+          </div>
+          
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="card">
+        <div class="card-header">
+        <a class="btn bg-gradient-success" href="{% url 'export_havi_osszesites_all' %}">Előző havi összesített export</a>
+        </div>
+        <div class="card-body">
+          <table class="table table-striped">
+            <tr>
+              <thead class="thead-light">
+                  <tr>
+                      <th scope="col">Kód-Előző havi lekérdezés</th>
+                      <th scope="col">Lehallgatott órák ára</th>
+                      
+                  </tr>
+                  
+              </thead>
+              <tbody>
+                  {% for sor in lista %}
+                  <tr>
+                      
+                      <td><a href="{% url 'export_havi_osszesites' sor.gyerek_id %}">{{sor.gyerek_kod}} </a></td>
+                      <td>{{sor.oradijak}} Ft</td>
+                      
+                  </tr>
+                  {% endfor %}
+              </tbody>
+          </table>
+          {% if is_paginated %}
+              {% include "_pagination.html" %}
+          {% endif %}
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+          Footer
+        </div>
+        <!-- /.card-footer-->
+      </div>
+      <!-- /.card -->
+
+    </section>
+    <!-- /.content -->
+  </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+  <!-- jQuery -->
+  <script src="/static/assets/plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap 4 -->
+  <script src="/static/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="/static/assets/js/adminlte.min.js"></script>
+
+{% endblock javascripts %}

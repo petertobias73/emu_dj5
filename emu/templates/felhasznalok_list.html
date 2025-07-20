@@ -1,0 +1,114 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Felhasználó lista {% endblock %} 
+
+<!-- Element injected in the BODY element -->
+{% block body_class %} sidebar-mini pace-primary {% endblock body_class %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/static/assets/plugins/fontawesome-free/css/all.min.css">
+  <!-- pace-progress -->
+  <link rel="stylesheet" href="/static/assets/plugins/pace-progress/themes/black/pace-theme-flat-top.css">
+  <!-- adminlte-->
+  <link rel="stylesheet" href="/static/assets/css/adminlte.min.css">
+
+{% endblock stylesheets %}
+
+{% block content %}  
+
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Felhasználó lista</h1>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="card">
+        <div class="card-header">
+          <a class="btn bg-gradient-success" href="{% url 'uj_felhasznalo' %}">Felhasználó felvétele</a>
+        </div>
+        <div class="card-body">
+        <!--
+            Szűro modul
+        
+          <div class="row">
+	          <div class="col">
+			        <form method="get">
+          				{{myFilter.form}}
+                  <button class="btn btn-primary" type="submit">Search</button>
+		          </form>
+      		  </div>
+	        </div>
+          -->
+          <table class="table table-striped">
+          <tr>
+              <thead class="thead-light">
+                    <tr>
+                      <th scope="col">Felhasználó</th>
+                      <th scope="col">Típusa</th>
+                      <th scope="col">Terapeuta név</th>
+                      <th scope="col">Adatlap</th>
+                      <th scope="col">Utolsó belépése</th>
+                                            
+                    </tr>
+
+              </thead>
+              <tbody>
+                  {% for user in felhasznalok %}
+                  <tr>
+                      <td>{{user.username}}</td>
+                      <td>{{user.groups.all.0}}</td>
+                      <td>{{user.guru.nev}}</td>
+                      <td><a class="btn btn-warning btn-sm" href="{% url 'user_mod' user.id %}">Adatlap</a></td>
+                      <td>{{user.last_login}}</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+          </table>
+          {% if is_paginated %}
+              {% include "_pagination.html" %}
+          {% endif %}
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+          <a class="btn bg-gradient-success" href="{% url 'uj_felhasznalo' %}">Felhasználó felvétele</a>
+        </div>
+        <!-- /.card-footer-->
+      </div>
+      <!-- /.card -->
+
+    </section>
+    <!-- /.content -->
+  </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+  <!-- jQuery -->
+  <script src="/static/assets/plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap 4 -->
+  <script src="/static/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- pace-progress -->
+  <script src="/static/assets/plugins/pace-progress/pace.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="/static/assets/js/adminlte.min.js"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="/static/assets/js/demo.js"></script>
+
+{% endblock javascripts %}

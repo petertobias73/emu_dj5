@@ -1,0 +1,117 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Órák {% endblock %} 
+
+<!-- Element injected in the BODY element -->
+{% block body_class %} {% endblock body_class %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/static/assets/plugins/fontawesome-free/css/all.min.css">
+  <!-- fullCalendar -->
+  <link rel="stylesheet" href="/static/assets/plugins/fullcalendar/main.min.css">
+  <link rel="stylesheet" href="/static/assets/plugins/fullcalendar-daygrid/main.min.css">
+  <link rel="stylesheet" href="/static/assets/plugins/fullcalendar-timegrid/main.min.css">
+  <link rel="stylesheet" href="/static/assets/plugins/fullcalendar-bootstrap/main.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="/static/assets/css/adminlte.min.css">
+
+{% endblock stylesheets %}
+
+{% block content %}
+  <div class="content-wrapper">
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>EMU naptár</h1>
+          </div>          
+        </div>
+      </div>
+    </section>
+    <section class="content">
+      
+        <div class="row">
+          <div class="col-md-3"></div>
+          <div class="cols-md-9" id="calendar"></div>
+          <div class="col-md-3"></div>
+        </div>
+      
+    </section>
+  </div>
+{% endblock content %}
+
+{% block javascripts %}
+
+  <!-- jQuery -->
+  <script src="/static/assets/plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap -->
+  <script src="/static/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- jQuery UI -->
+  <script src="/static/assets/plugins/jquery-ui/jquery-ui.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="/static/assets/js/adminlte.min.js"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="/static/assets/js/demo.js"></script>
+  <!-- fullCalendar 2.2.5 -->
+  <script src="/static/assets/plugins/moment/moment.min.js"></script>
+  <script src="/static/assets/plugins/fullcalendar/main.min.js"></script>
+  <script src="/static/assets/plugins/fullcalendar-daygrid/main.min.js"></script>
+  <script src="/static/assets/plugins/fullcalendar-timegrid/main.min.js"></script>
+  <script src="/static/assets/plugins/fullcalendar-interaction/main.min.js"></script>
+  <script src="/static/assets/plugins/fullcalendar-bootstrap/main.min.js"></script>
+  <!-- Page specific script -->
+  
+
+
+
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar');
+
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      defaultView: 'dayGridMonth',
+      locale: 'hu',
+      firstDay: 1,
+      plugins: [ 'bootstrap', 'interaction', 'dayGrid', 'timeGrid' ],
+      header    : {
+        left  : 'prev,next today',
+        center: 'title',
+        right : 'dayGridMonth,timeGridWeek,timeGridDay',
+      },
+        'themeSystem': 'bootstrap',
+        events    : [
+                      {% for ora in orak %}
+                        {
+                          title          : '{{ ora.csoport}}-{{ ora.kezdes}}',
+                          start          : '{{ ora.kezdes|date:"Y-m-d" }}T{{ ora.kezdes|time:"H:i" }}',
+                          end            : '{{ ora.befejezes|date:"Y-m-d" }}T{{ ora.befejezes|time:"H:i" }}',
+                          {% if ora.megtartott %}
+                          backgroundColor: '#b78c00', //Blue
+                          borderColor    : '#b78c00',
+                          {% else %}
+                          backgroundColor: '#0073b7', //Blue
+                          borderColor    : '#0073b7',
+                          {% endif %}
+                          url            : '{% url 'ora_mod' ora.id %}',
+                          allDay         : false,                         
+                        },
+                      {% endfor %}
+                      ],
+    });
+
+    
+
+
+
+    calendar.render();
+  });
+</script>
+
+{% endblock javascripts %}

@@ -1,0 +1,250 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} 
+Órák
+{% endblock %} 
+
+<!-- Element injected in the BODY element -->
+{% block body_class %} sidebar-mini pace-primary {% endblock body_class %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/static/assets/plugins/fontawesome-free/css/all.min.css">
+  <!-- adminlte-->
+  <link rel="stylesheet" href="/static/assets/css/adminlte.min.css">
+
+  <link rel="stylesheet" href="/static/assets/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="/static/assets/css/buttons.dataTables.min.css">
+    <style>
+              tfoot input {
+                  width: 100%;
+                  padding: 3px;
+                  box-sizing: border-box;
+                   }
+                                      
+              .dataTables_wrapper .dataTables_paginate {
+                  background-color: PeachPuff;
+                  }
+
+</style>
+{% endblock stylesheets %}
+
+{% block content %}  
+
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            {% if terapeuta_nev %}
+              <h1>Terapeuta : {{terapeuta_nev}} órái</h1>
+            {% else %}
+              <h1>Órák </h1>
+              
+            {% endif %}
+
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="card">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-4">
+              <a class="btn bg-gradient-success" href="{% url 'ora' %}">Óra felvétele</a>
+            
+              <a class="btn bg-gradient-info" href="{% url 'ora_lista_export' %}?{{request.GET.urlencode}}">Excel export</a>
+            </div>
+            <div class="col-6">
+                      <form method="get">
+                        
+                        {{ myFilter.form.csoport }}
+                        
+                            {{ myFilter.form.gyerek }}
+
+                        <button class="btn-sm bg-gradient-success" type="submit">Keresés</button></th>
+                    </form>
+            </div>
+            <div class="col-2">
+              </div>
+        </div>
+        <div class="card-body">
+
+          <table id="tabla" class="table table-striped table-bordered" >
+          
+              <thead class="thead-light">
+                    <tr>
+                      <th scope="col">Terápia</th>
+                      <th scope="col">
+                      Kezdés: Év-Hó-Nap HH:mm
+                      </th>
+                      <th scope="col">Terapeuták</th>
+                      <th scope="col">Megtartott</th>
+                      
+                      <th scope="col">Jelenléti</th>
+                      <th scope="col">Ismétlés</th>
+                      
+                      <th scope="col">Törlés</th>
+                      <!--th></th-->                      
+                    </tr>
+                    <!--tr>
+                    <form method="get">
+                        
+                        <th>{{ myFilter.form.csoport }}</th>
+                        <!--th>
+                            {{ myFilter.form.ev }}
+                            {{ myFilter.form.honap }}
+                            {{ myFilter.form.nap }}
+                        </th>
+                        <th>{{ myFilter.form.megtartott }}</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th> <button class="btn-sm bg-gradient-success" type="submit">Keresés</button></th>
+                    </form>
+                  </tr-->
+              </thead>
+              <tbody>
+                  {% for ora in orak %}
+                  <tr>
+                      {% if ora.megtartott %}
+                          <td><a href="{% url 'ora_mod' ora.id %}">{{ora.csoport}}</a></td>
+                          <td>{{ora.kezdes|date:'Y-m-d H:i'}}</td>
+                          
+                          <td>
+                                  {% for guru in ora.csoport.guruk %}
+                                  {{guru.guru.nev}}
+                                   {% endfor %}
+                           </td>
+                          <td><strong>Igen</strong></td>
+                          <td ><a class="btn bg-gradient-info btn-sm open-jelenleti" href="{% url 'jelenleti' ora.id %}" data-popup-url="{% url 'jelenleti' ora.id %}">Jelenléti</a></td>
+                          <td><a class="btn bg-gradient-warning btn-sm" href="{% url 'ismetles' ora.id %}">Ismétlés</a></td>
+                          <td><a class="btn bg-gradient-danger btn-sm" href="{% url 'ora_torles' ora.id %}">Törlés</a></td>
+                      
+                          
+                      {% else %}
+                          <td bgcolor=#e6cfca><a href="{% url 'ora_mod' ora.id %}">{{ora.csoport}}</a></td>
+                          <td bgcolor=#e6cfca>{{ora.kezdes|date:'Y-m-d H:i'}}</td>
+                          <td>
+                                  {% for guru in ora.csoport.guruk %}
+                                  {{guru.guru.nev}}<br>
+                                   {% endfor %}
+                           </td>
+                          <td bgcolor=#e6cfca>Nem</td>
+                          <td bgcolor=#e6cfca><a class="btn bg-gradient-info btn-sm open-jelenleti" href="{% url 'jelenleti' ora.id %}" data-popup-url="{% url 'jelenleti' ora.id %}">Jelenléti</a></td>
+                           
+                          <td bgcolor=#e6cfca><a class="btn bg-gradient-warning btn-sm" href="{% url 'ismetles' ora.id %}">Ismétlés</a></td>
+                          <td bgcolor=#e6cfca><a class="btn bg-gradient-danger btn-sm" href="{% url 'ora_torles' ora.id %}">Törlés</a></td>
+                          <!--td bgcolor=#e6cfca> {% for guru in ora.csoport.guruk %}
+                                  {{guru.guru.nev}}
+                                   {% endfor %}
+                            </td-->
+
+                      {% endif %}
+                      
+                      
+                  </tr>
+                {% endfor %}
+              </tbody>
+              <tfoot>
+              <tr>
+                      <th scope="col">Terápia</th>
+                      <th scope="col">Kezdés: Év-Hó-Nap HH:mm
+                      </th>
+                      <th scope="col">Terapeuták</th>
+                      <th scope="col">Megtartott</th>
+                      
+                      <th scope="col">Jelenléti</th>
+                      <th scope="col">Ismétlés</th>
+                      
+                      <th scope="col">Törlés</th>
+                      <!--th></th-->                      
+                    </tr>
+
+
+              </tfoot>
+          </table>
+
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+          
+        </div>
+        <!-- /.card-footer-->
+      </div>
+      <!-- /.card -->
+
+    </section>
+    <!-- /.content -->
+  </div>
+{% include "jelenleti_modal.html" %}
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+  <script src="/static/assets/plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap 4 -->
+  <script src="/static/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="/static/assets/js/adminlte.min.js"></script>
+  <!-- DataTable -->
+	
+	<script type="text/javascript" language="javascript" src="/static/assets/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" language="javascript" src="/static/assets/js/dataTables.buttons.min.js"></script>
+	<script type="text/javascript" language="javascript" src="/static/assets/js/jszip.min.js"></script>
+	<script type="text/javascript" language="javascript" src="/static/assets/js/pdfmake.min.js"></script>
+	<script type="text/javascript" language="javascript" src="/static/assets/js/vfs_fonts.js"></script>
+	<script type="text/javascript" language="javascript" src="/static/assets/js/buttons.html5.min.js"></script>
+	<script type="text/javascript" language="javascript" src="/static/assets/js/js/buttons.print.min.js"></script>
+
+
+  <script>
+      $(document).ready(function() {
+        $('#tabla tfoot th').each( function () {
+        var title = $(this).text();
+        $(this).html( '<input type="text" placeholder=" '+title+'" />' );
+        } );
+        var table = $('#tabla').DataTable({
+        initComplete: function () {
+            // Apply the search
+            this.api().columns().every( function () {
+                var that = this;
+ 
+                $( 'input', this.footer() ).on( 'keyup change clear', function () {
+                    if ( that.search() !== this.value ) {
+                        that
+                            .search( this.value )
+                            .draw();
+                    }
+                } );
+            } );
+        },
+        "dom":
+            "<'row'<'col-sm-4'l><'col-sm-4'B><'col-sm-4'f>>"+
+            "<'row'<'col-sm-4'i><'col-sm-4 text-center'><'col-sm-4'p>>"+
+            "<'row'<'col-sm-12'tr>>",
+            
+            "language": {
+              "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Hungarian.json"
+                  },
+           "buttons": ['copy', 'excel', 'pdf', 'print'],
+           "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Mind"]]
+        
+        });
+        
+    } );
+  </script>
+
+
+
+{% endblock javascripts %}

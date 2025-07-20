@@ -1,0 +1,52 @@
+# byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# tests and coverage
+*.pytest_cache
+.coverage
+
+# database & logs
+*.db
+*.log
+
+# other
+.DS_Store
+
+# javascript
+package-lock.json
+
+staticfiles/*
+
+# Environments
+.env
+.venv
+env/
+venv/
+venv_1/
+ENV/
+env.bak/
+venv.bak/
+
+#Django settings
+emu/settings.py
+settings.py
+db.sqlite3
+
+#Websites files
+.htaccess
+400.shtml
+401.shtml
+403.shtml
+404.shtml
+413.shtml
+500.shtml
+cgi-bin/*
+media/*
+public/*
+static/*
+static_files/*
+tmp/*
+passenger_wsgi.py
+cp_errordocument.shtml
+

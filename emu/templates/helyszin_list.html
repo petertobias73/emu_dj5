@@ -1,0 +1,106 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Helyszínek {% endblock %} 
+
+<!-- Element injected in the BODY element -->
+{% block body_class %} sidebar-mini pace-primary {% endblock body_class %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/static/assets/plugins/fontawesome-free/css/all.min.css">
+  <!-- adminlte-->
+  <link rel="stylesheet" href="/static/assets/css/adminlte.min.css">
+
+{% endblock stylesheets %}
+
+{% block content %}  
+
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Helyszínek</h1>
+          </div>
+          
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="card">
+        <div class="card-header">
+          <a class="btn bg-gradient-success" href="{% url 'helyszin' %}">Helyszín felvétele</a>
+        </div>    <!-- pace-progress -->
+  <script src="/static/assets/plugins/pace-progress/pace.min.js"></script>
+        <div class="card-body">
+        <!--
+            Szűro modul
+        
+          <div class="row">
+	          <div class="col">
+			        <form method="get">
+          				{{myFilter.form}}
+                  <button class="btn btn-primary" type="submit">Search</button>
+		          </form>
+      		  </div>
+	        </div>
+          -->
+          <table class="table table-striped">
+          
+              <thead class="thead-light">
+                    <tr>
+                      <th scope="col">Elnevezés</th>
+                      <th scope="col">Város</th>
+                      <th scope="col">Cím</th>
+                      <th></th>                  
+                    </tr>
+                    
+              </thead>
+              <tbody>
+                  {% for helyszin in helyszinek %}
+                  <tr>
+                      <td><a href="{% url 'helyszin_mod' helyszin.id %}">{{helyszin.elnevezes}}</a></td>
+                      <td>{{helyszin.varos}}</td>
+                      <td>{{helyszin.cim}}</td>
+                      <td></td>
+                      
+                  </tr>
+                {% endfor %}
+              </tbody>
+          </table>
+          
+        <!-- /.card-body -->
+        <div class="card-footer">
+          
+        </div>
+        <!-- /.card-footer-->
+      </div>
+      <!-- /.card -->
+
+    </section>
+    <!-- /.content -->
+  </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+  <!-- jQuery -->
+  <script src="/static/assets/plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap 4 -->
+  <script src="/static/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+  <script src="/static/assets/js/adminlte.min.js"></script>
+
+
+{% endblock javascripts %}

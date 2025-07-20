@@ -1,0 +1,371 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Vezetői áttekintő {% endblock %} 
+
+<!-- Element injected in the BODY element -->
+{% block body_class %} sidebar-mini {% endblock body_class %} 
+
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/static/assets/plugins/fontawesome-free/css/all.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- Tempusdominus Bootstrap 4 -->
+  <link rel="stylesheet" href="/static/assets/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+  <!-- iCheck -->
+  <link rel="stylesheet" href="/static/assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <!-- JQVMap -->
+  <!--link rel="stylesheet" href="/static/assets/plugins/jqvmap/jqvmap.min.css"-->
+  <!-- Theme style -->
+  <link rel="stylesheet" href="/static/assets/css/adminlte.min.css">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="/static/assets/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+  <!-- Daterange picker -->
+  <link rel="stylesheet" href="/static/assets/plugins/daterangepicker/daterangepicker.css">
+  <!-- summernote -->
+  <link rel="stylesheet" href="/static/assets/plugins/summernote/summernote-bs4.min.css">
+
+{% endblock stylesheets %}
+
+{% block content %}
+  
+  <div class="content-wrapper">
+
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0 text-dark">Vezetői Áttekintő</h1>
+          </div>
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <!-- Small boxes (Stat box) -->
+        <div class="row">
+
+
+              <div class="col-lg-2">
+                <!-- small box -->
+                <div class="small-box bg-info">
+                  <div class="inner">
+                    <h3>{{ tervezett_havi_bevetel.0}} Ft</h3>
+
+                    <p>Tervezett Havi Bevétel az Órákból</p>
+                  </div>
+                  <div class="icon">
+                    <i class="ion ion-cash"></i>
+                  </div>
+                    <a href="#" class="small-box-footer">Későbbi link<i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+              </div>
+              <div class="col-lg-2">
+                <!-- small box -->
+                <div class="small-box bg-info">
+                  <div class="inner">
+                    <h3>{{ tervezett_havi_bevetel.1 }} Ft</h3>
+
+                    <p>Tervezett Havi Bevétel az Egyediekből</p>
+                  </div>
+                  <div class="icon">
+                    <i class="ion ion-cash"></i>
+                  </div>
+                    <a href="#" class="small-box-footer">Későbbi link<i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+              </div>
+                <div class="col-lg-2">
+                <!-- small box -->
+                <div class="small-box bg-info">
+                  <div class="inner">
+                    <h3>{{ tervezett_havi_orak}}</h3>
+
+                    <p>Tervezett Havi Órák</p>
+                  </div>
+                  <div class="icon">
+                    <i class="ion ion-clock"></i>
+                  </div>
+                    <a href="#" class="small-box-footer">Későbbi link<i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+              </div>
+            </div>
+        <div class="row">
+
+          <div class="col-lg-2">
+            <div class="small-box bg-success">
+              <div class="inner">
+                <h3>{{ elozo_havi_bevetel.0 }} Ft</h3>
+
+                    <p>Múlt Havi Órák díja</p>
+              </div>
+              <div class="icon">
+                    <i class="ion ion-cash"></i>
+              </div>
+                    <a href="#" class="small-box-footer">Későbbi link<i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <div class="col-lg-2">
+            <div class="small-box bg-success">
+              <div class="inner">
+                <h3>{{ elozo_havi_bevetel.1 }} Ft</h3>
+
+                    <p>Múlt Havi Egyediek bevétele</p>
+              </div>
+              <div class="icon">
+                    <i class="ion ion-cash"></i>
+              </div>
+                    <a href="#" class="small-box-footer">Későbbi link<i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <div class="col-lg-2">
+            <div class="small-box bg-success">
+              <div class="inner">
+                <h3>{{ elozo_havi_bevetel.2 }} Ft</h3>
+
+                    <p>Múlt Havi Befizetések</p>
+              </div>
+              <div class="icon">
+                    <i class="ion ion-cash"></i>
+              </div>
+                    <a href="#" class="small-box-footer">Későbbi link<i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <div class="col-lg-2">
+            <div class="small-box bg-success">
+              <div class="inner">
+                <h3>{{ elozo_havi_bevetel.3 }} Ft</h3>
+
+                    <p>Múlt Havi Nettó Bevétel</p>
+              </div>
+              <div class="icon">
+                    <i class="ion ion-cash"></i>
+              </div>
+                    <a href="#" class="small-box-footer">Későbbi link<i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+  
+        </div>
+        <div class="row">
+          <div class="col-lg-2">
+              <div class="small-box bg-warning">
+                <div class="inner">
+                  <h3>{{ lemondott_orak.0 }}</h3>
+
+                      <p>Múlt hónapban lemondott órák összesen</p>
+                </div>
+                <div class="icon">
+                      <i class="ion ion-clock"></i>
+                </div>
+                      <a href="#" class="small-box-footer">Későbbi link<i class="fas fa-arrow-circle-right"></i></a>
+              </div>
+            </div>
+            <div class="col-lg-2">
+              <div class="small-box bg-warning">
+                <div class="inner">
+                  <h3>{{ lemondott_orak.1 }}</h3>
+
+                      <p>Múlt hónapban 100%-al lemondott órák</p>
+                </div>
+                <div class="icon">
+                      <i class="ion ion-clock"></i>
+                </div>
+                      <a href="#" class="small-box-footer">Későbbi link<i class="fas fa-arrow-circle-right"></i></a>
+              </div>
+            </div>
+            <div class="col-lg-2">
+              <div class="small-box bg-warning">
+                <div class="inner">
+                  <h3>{{ lemondott_orak.2 }}</h3>
+
+                      <p>Múlt hónapban 0%-al lemondott órák</p>
+                </div>
+                <div class="icon">
+                      <i class="ion ion-clock"></i>
+                </div>
+                      <a href="#" class="small-box-footer">Későbbi link<i class="fas fa-arrow-circle-right"></i></a>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-2">
+                <div class="small-box bg-info">
+                  <div class="inner">
+                    <h3>{{ aktiv_terapiak_szama }}</h3>
+
+                        <p>Aktív terápiák száma</p>
+                  </div>
+                  <div class="icon">
+                        <i class="ion ion-clock"></i>
+                  </div>
+                        <a href="#" class="small-box-footer">Későbbi link<i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+                    
+        <!-- /.row (main row) -->
+        <!-- /.container-fluid -->
+      </div>
+                    <div class="card card-primary card-outline">
+                <div class="card-header">
+                  <h3 class="card-title">
+                    <i class="far fa-chart-bar"></i>
+                    Megtartott órák megoszlása kategóriánként.
+                  </h3>
+    
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                      <i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                      <i class="fas fa-times"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div id="donut-chart" style="height: 600px;"></div>
+                </div>
+                <!-- /.card-body-->
+              </div>
+    </section>
+    <!-- /.content -->
+
+  </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+  <!-- jQuery -->
+  <script src="/static/assets/plugins/jquery/jquery.min.js"></script>
+  <!-- jQuery UI 1.11.4 -->
+  <script src="/static/assets/plugins/jquery-ui/jquery-ui.min.js"></script>
+  <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+  <script>
+    $.widget.bridge('uibutton', $.ui.button)
+  </script>
+  <!-- Bootstrap 4 -->
+  <script src="/static/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- ChartJS -->
+  <!--script src="/static/assets/plugins/chart.js/Chart.min.js"></script-->
+  <!-- Sparkline -->
+  <!--script src="/static/assets/plugins/sparklines/sparkline.js"></script-->
+  <!-- JQVMap -->
+  <!--script src="/static/assets/plugins/jqvmap/jquery.vmap.min.js"></script-->
+  <!--script src="/static/assets/plugins/jqvmap/maps/jquery.vmap.usa.js"></script-->
+  <!-- jQuery Knob Chart -->
+  <!--script src="/static/assets/plugins/jquery-knob/jquery.knob.min.js"></script-->
+  <!-- daterangepicker -->
+  <!--script src="/static/assets/plugins/moment/moment.min.js"></script-->
+  <!--script src="/static/assets/plugins/daterangepicker/daterangepicker.js"></script-->
+  <!-- Tempusdominus Bootstrap 4 -->
+  <!--script src="/static/assets/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script-->
+  <!-- Summernote -->
+  <!--script src="/static/assets/plugins/summernote/summernote-bs4.min.js"></script-->
+  <!-- overlayScrollbars -->
+  <script src="/static/assets/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="/static/assets/js/adminlte.js"></script>
+  <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+  <script src="/static/assets/js/pages/dashboard.js"></script>
+  <!-- AdminLTE for demo purposes -->
+  <!--script src="/static/assets/js/demo.js"></script-->
+  <script src="/static/assets/plugins/flot/jquery.flot.js"></script>
+  <script src="/static/assets/plugins/flot/jquery.flot.pie.js"></script>
+  <script src="/static/assets/plugins/flot/jquery.flot.resize.js"></script>
+
+  
+  <!-- Page script -->
+  <script>
+    $(function () {
+      
+
+
+
+      /*
+      * DONUT CHART
+      * -----------
+      */
+      var donutData = [
+        {
+          label: 'Egyéni',
+          data : {{kategoriak.0}},
+          color: '#afc236'
+        },
+        {
+          label: 'Páros',
+          data : {{kategoriak.1}},
+          color: '#339124'
+        },
+        {
+          label: 'Csoportos',
+          data : {{kategoriak.2}},
+          color: '#2282ab'
+        },
+        {
+          label: 'Család t.',
+          data : {{kategoriak.3}},
+          color: '#5922b3'
+        },
+        {
+          label: 'Szülői',
+          data : {{kategoriak.4}},
+          color: '#d40f0f'
+        },
+        {
+          label: 'Egyéb',
+          data : {{kategoriak.5}},
+          color: '#d6d918'
+        },
+        
+      ]
+      $.plot('#donut-chart', donutData, {
+        series: {
+          pie: {
+            show       : true,
+            radius     : 1,
+            innerRadius: 0.5,
+            label      : {
+              show     : true,
+              radius   : 2 / 3,
+              formatter: labelFormatter,
+              threshold: 0.1
+            }
+
+          }
+        },
+        legend: {
+          show: false
+        }
+      })
+      /*
+      * END DONUT CHART
+      */
+
+    })
+
+    /*
+    * Custom Label formatter
+    * ----------------------
+    */
+    function labelFormatter(label, series) {
+      return '<div style="font-size:13px; text-align:center; padding:2px; color: #fff; font-weight: 600;">'
+        + label
+        + '<br>'
+        + Math.round(series.percent) + '%</div>'
+    } 
+
+</script>
+
+{% endblock javascripts %}
+
